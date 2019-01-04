@@ -15,8 +15,7 @@
 #----------------------------------------------------------------------------
 
 # # project specific files
-SRC = matrix.c \
-  i2c_master.c
+SRC += matrix.c
 
 # MCU name
 MCU = atmega32u4
@@ -82,7 +81,12 @@ UNICODE_ENABLE   = yes # Unicode
 SWAP_HANDS_ENABLE= yes # Allow swapping hands of keyboard
 SLEEP_LED_ENABLE = no
 API_SYSEX_ENABLE = no
-RGBLIGHT_ENABLE = no
-RGB_MATRIX_ENABLE = yes
+RGBLIGHT_ENABLE = yes
+RGB_MATRIX_ENABLE = no # enable later
+
+ifeq ($(strip $(RGB_MATRIX_ENABLE)), no)
+  SRC += i2c_master.c
+endif
+
 
 LAYOUTS = ergodox
