@@ -18,8 +18,8 @@
 // Layer shorthand
 enum xd75_layers {
   _QWERTY,
-  _MENU,
   _GAME,
+  _MENU,
   _RAISE,
   _LOWER,
   _ADJUST,
@@ -100,8 +100,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   RGB_HUD, RGB_HUI, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12 ,
   KC_GRV , KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    RGB_SAD, RGB_SAI, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______, _______,
   _______, _______, _______, _______, _______, RGB_MODE_PLAIN, RGB_VAD, RGB_VAI, RGB_MODE_BREATHE,RGB_MODE_RAINBOW,RGB_MODE_SWIRL,RGB_MODE_SNAKE,RGB_MODE_KNIGHT,RGB_MODE_XMAS,RGB_MODE_GRADIENT,
-  _______, _______, _______, _______, _______, _______, RGB_RMOD,RGB_MOD, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
+  _______, _______, _______, _______, _______, _______, RGB_RMOD,RGB_MOD, _______, _______, _______, _______, _______, KC_VOLU, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_MPLY
  ),
 
  /* LOWER
@@ -121,8 +121,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______, _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12 ,
     KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, _______, _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______, _______,
     _______, KC_TILD, _______, KC_SLASH,KC_LCBR, KC_LBRC, _______, _______, KC_RBRC, KC_RCBR, KC_BSLASH,KC_MINUS,KC_PLUS,KC_PIPE, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_UNDS, KC_EQL,  _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_UNDS, KC_EQL,  KC_VOLU, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_MPLY
   ),
 
   /* GAME
