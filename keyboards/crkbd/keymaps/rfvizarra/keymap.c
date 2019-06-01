@@ -52,11 +52,26 @@ enum macro_keycodes {
 //#define KC_LSMOD RGB_SMOD
 #define KC_ALTTB ALT_T(KC_TAB)
 #define KC_ENTCTL CTL_T(KC_ENT)
-#define KC_LOWER MO(_LOWER)
+#define KC_LOWER TD(LOWER_LGUI)
 #define KC_RAISE LT(_RAISE, KC_BSPC)
 #define KC_NAV MO(_NAV)
 #define KC_LOCK  RGUI(KC_L)
 
+enum td_keycodes {
+  LOWER_LGUI = 0
+};
+
+typedef enum {
+  SINGLE_TAP,
+  SINGLE_HOLD
+} td_state_t;
+
+static td_state_t td_state;
+
+int curr_dance (qk_tap_dance_state_t *state);
+
+void lowerlgui_finished(qk_tap_dance_state_t *state, void *user_data);
+void lowerlgui_reset(qk_tap_dance_state_t *state, void *user_data);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
@@ -324,3 +339,51 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
+
+//tap dance for lower/lgui
+int curr_dance (qk_tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (state->interrupted || !state->pressed) { return SINGLE_TAP;}
+        else { return SINGLE_HOLD;}
+    }
+    return 2;
+}
+void lowerlgui_finished(qk_tap_dance_state_t *state, void *user_data) {
+    td_state = curr_dance(state);
+    switch (td_state)
+    {
+    case SINGLE_TAP:
+        /* code */
+        register_code16(KC_LGUI);
+        break;
+
+    case SINGLE_HOLD:
+        /* code */
+        layer_on(_LOWER);
+        break;
+
+    default:
+        break;
+    }
+}
+void lowerlgui_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (td_state)
+    {
+    case SINGLE_TAP:
+        /* code */
+        unregister_code16(KC_LGUI);
+        break;
+
+    case SINGLE_HOLD:
+        /* code */
+        layer_off(_LOWER);
+        break;
+
+    default:
+        break;
+    }
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [LOWER_LGUI] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lowerlgui_finished, lowerlgui_reset)
+};
