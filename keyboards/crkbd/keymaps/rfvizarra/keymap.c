@@ -49,16 +49,21 @@ enum macro_keycodes {
 #define KC_LSAD  RGB_SAD
 #define KC_LVAI  RGB_VAI
 #define KC_LVAD  RGB_VAD
-//#define KC_LSMOD RGB_SMOD
+#define KC_LMOD  RGB_MOD
+#define KC_RMOD  RGB_RMOD
 #define KC_ALTTB ALT_T(KC_TAB)
 #define KC_ENTCTL CTL_T(KC_ENT)
-#define KC_LOWER TD(LOWER_LGUI)
-#define KC_RAISE LT(_RAISE, KC_BSPC)
+//#define KC_LOWER TD(LOWER_LGUI)
+#define KC_LOWER MO(_LOWER)
+#define KC_RALT_LGUI TD(RALT_LGUI)
+//#define KC_RAISE LT(_RAISE, KC_BSPC)
+#define KC_RAISE MO(_RAISE)
 #define KC_NAV MO(_NAV)
 #define KC_LOCK  RGUI(KC_L)
 
 enum td_keycodes {
-  LOWER_LGUI = 0
+  //LOWER_LGUI = 0
+  RALT_LGUI = 0
 };
 
 typedef enum {
@@ -70,8 +75,8 @@ static td_state_t td_state;
 
 int curr_dance (qk_tap_dance_state_t *state);
 
-void lowerlgui_finished(qk_tap_dance_state_t *state, void *user_data);
-void lowerlgui_reset(qk_tap_dance_state_t *state, void *user_data);
+void raltlgui_finished(qk_tap_dance_state_t *state, void *user_data);
+void raltlgui_reset(qk_tap_dance_state_t *state, void *user_data);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
@@ -82,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       NAV,       Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,   DEL,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, LSFT, ENTCTL,     RALT, SPC, RAISE \
+                                  LOWER, LSFT, ENTCTL,   RALT_LGUI, SPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
@@ -94,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        XXXXX, XXXXX, XXXXX, XXXXX, LGUI, XXXXX,                  XXXXX, XXXXX, _____,  UNDS,  EQL, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, LSFT, ENTCTL,      RALT, SPC, RAISE \
+                                  LOWER, LSFT, ENTCTL,   RALT_LGUI, SPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
@@ -106,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       XXXXX, XXXXX,  MNXT,  VOLD,  VOLU,  MPLY,                  XXXXX, XXXXX, _____,  UNDS,   EQL, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, LSFT, ENTCTL,      RALT, SPC, RAISE \
+                                  LOWER, LSFT, ENTCTL,   RALT_LGUI, SPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
@@ -118,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       XXXXX,    F9,   F10,   F11,   F12, XXXXX,                  XXXXX,  MNXT,  VOLD,  VOLU,  MPLY, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, ENTCTL, LSFT,      RALT, SPC, RAISE \
+                                  LOWER, ENTCTL, LSFT,   RALT_LGUI, SPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
@@ -130,25 +135,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       XXXXX,    F9,   F10,   F11,   F12, XXXXX,                  XXXXX,  MNXT,  VOLD,  VOLU,  MPLY,XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, ENTCTL, LSFT,      RALT, SPC, RAISE \
+                                  LOWER, ENTCTL, LSFT,   RALT_LGUI, SPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
 
   [_ADJUST] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        RST,  LRST, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+       LTOG,  LRST, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LTOG,  LHUI,  LSAI,  LVAI, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX,  LOCK, XXXXX, XXXXX,\
+       LMOD,  LHUI,  LSAI,  LVAI, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX,  LOCK, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      XXXXX,  LHUD,  LSAD,  LVAD, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+       RMOD,  LHUD,  LSAD,  LVAD, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, ENTCTL, LSFT,      RALT, SPC, RAISE \
+                                  LOWER, ENTCTL, LSFT,   RALT_LGUI, SPC, RAISE \
                               //`--------------------'  `--------------------'
   )
 };
 
-/*
+
 int RGB_current_mode;
 
 void persistent_default_layer_set(uint16_t default_layer) {
@@ -157,6 +162,7 @@ void persistent_default_layer_set(uint16_t default_layer) {
 }
 
 // Setting ADJUST layer RGB back to default
+/*
 void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
   if (IS_LAYER_ON(layer1) && IS_LAYER_ON(layer2)) {
     layer_on(layer3);
@@ -164,6 +170,7 @@ void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
     layer_off(layer3);
   }
 }
+ */
 
 void matrix_init_user(void) {
     #ifdef RGBLIGHT_ENABLE
@@ -174,7 +181,7 @@ void matrix_init_user(void) {
         iota_gfx_init(!has_usb());   // turns on the display
     #endif
 }
-*/
+
 
 //SSD1306 OLED update loop, make sure to add #define SSD1306OLED in config.h
 #ifdef SSD1306OLED
@@ -303,6 +310,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
 
 uint32_t layer_state_set_user(uint32_t state) {
+//   state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+//   state = update_tri_layer_state(state, _LOWER, _NAV, _NAV2);
   state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
   state = update_tri_layer_state(state, _LOWER, _NAV, _NAV2);
   return state;
@@ -336,6 +345,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return false;
     break;
     */
+   case RGBRST:
+      #ifdef RGBLIGHT_ENABLE
+        if (record->event.pressed) {
+          eeconfig_update_rgblight_default();
+          rgblight_enable();
+          RGB_current_mode = rgblight_config.mode;
+        }
+      #endif
+      break;
   }
   return true;
 }
@@ -348,7 +366,7 @@ int curr_dance (qk_tap_dance_state_t *state) {
     }
     return 2;
 }
-void lowerlgui_finished(qk_tap_dance_state_t *state, void *user_data) {
+void raltlgui_finished(qk_tap_dance_state_t *state, void *user_data) {
     td_state = curr_dance(state);
     switch (td_state)
     {
@@ -359,14 +377,14 @@ void lowerlgui_finished(qk_tap_dance_state_t *state, void *user_data) {
 
     case SINGLE_HOLD:
         /* code */
-        layer_on(_LOWER);
-        break;
+        //layer_on(_LOWER);
+        register_code16(KC_RALT);
 
     default:
         break;
     }
 }
-void lowerlgui_reset(qk_tap_dance_state_t *state, void *user_data) {
+void raltlgui_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_state)
     {
     case SINGLE_TAP:
@@ -376,7 +394,8 @@ void lowerlgui_reset(qk_tap_dance_state_t *state, void *user_data) {
 
     case SINGLE_HOLD:
         /* code */
-        layer_off(_LOWER);
+        //layer_off(_LOWER);
+        unregister_code16(KC_RALT);
         break;
 
     default:
@@ -385,5 +404,5 @@ void lowerlgui_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [LOWER_LGUI] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lowerlgui_finished, lowerlgui_reset)
+  [RALT_LGUI] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, raltlgui_finished, raltlgui_reset)
 };
