@@ -26,6 +26,7 @@ extern uint8_t is_master;
 #define _RAISE 4
 #define _NAV   5
 #define _NAV2  6
+#define _NAV3  7
 #define _ADJUST 16
 
 enum custom_keycodes {
@@ -60,6 +61,12 @@ enum macro_keycodes {
 #define KC_RAISE MO(_RAISE)
 #define KC_NAV MO(_NAV)
 #define KC_LOCK  RGUI(KC_L)
+#define KC_MGKSPC LT(_NAV3, KC_SPC)
+#define KC_FORWRD LCTL(KC_RIGHT)
+#define KC_BACKWRD LCTL(KC_LEFT)
+#define KC_YANK LCTL(KC_INS)
+#define KC_PASTE LSFT(KC_INS)
+
 
 enum td_keycodes {
   //LOWER_LGUI = 0
@@ -87,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       NAV,       Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,   DEL,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, LSFT, ENTCTL,   RALT_LGUI, SPC, RAISE \
+                                  LOWER, LSFT, ENTCTL,   RALT_LGUI, MGKSPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
@@ -99,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        XXXXX, XXXXX, XXXXX, XXXXX, LGUI, XXXXX,                  XXXXX, XXXXX, _____,  UNDS,  EQL, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, LSFT, ENTCTL,   RALT_LGUI, SPC, RAISE \
+                                  LOWER, LSFT, ENTCTL,   RALT_LGUI,MGKSPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
@@ -111,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       XXXXX, XXXXX,  MNXT,  VOLD,  VOLU,  MPLY,                  XXXXX, XXXXX, _____,  UNDS,   EQL, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, LSFT, ENTCTL,   RALT_LGUI, SPC, RAISE \
+                                  LOWER, LSFT, ENTCTL,   RALT_LGUI,MGKSPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
@@ -123,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       XXXXX,    F9,   F10,   F11,   F12, XXXXX,                  XXXXX,  MNXT,  VOLD,  VOLU,  MPLY, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, ENTCTL, LSFT,   RALT_LGUI, SPC, RAISE \
+                                  LOWER, ENTCTL, LSFT,   RALT_LGUI,MGKSPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
@@ -135,7 +142,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       XXXXX,    F9,   F10,   F11,   F12, XXXXX,                  XXXXX,  MNXT,  VOLD,  VOLU,  MPLY,XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, ENTCTL, LSFT,   RALT_LGUI, SPC, RAISE \
+                                  LOWER, ENTCTL, LSFT,   RALT_LGUI,MGKSPC, RAISE \
+                              //`--------------------'  `--------------------'
+  ),
+
+  [_NAV3] = LAYOUT_kc( \
+  //,-----------------------------------------.                ,-----------------------------------------.
+      _____, _____, _____,FORWRD, _____, _____,                   YANK, _____, _____, _____, PASTE, _____,\
+  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
+      _____,  HOME,  PGDN,  PGUP,   END, _____,                  LEFT,   DOWN,    UP, RIGHT, _____, _____,\
+  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
+      _____, _____,   DEL, _____, _____,BACKWRD,                 _____, _____, _____, _____, _____, _____,\
+  //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
+                                  LOWER, ENTCTL, LSFT,   RALT_LGUI,MGKSPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
