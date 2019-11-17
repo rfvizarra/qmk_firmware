@@ -26,16 +26,13 @@ extern uint8_t is_master;
 #define _RAISE 4
 #define _NAV   5
 #define _NAV2  6
+#define _NAV3  7
 #define _ADJUST 16
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   BACKLIT,
   RGBRST
-};
-
-enum macro_keycodes {
-  KC_SAMPLEMACRO,
 };
 
 #define KC______ KC_TRNS
@@ -49,25 +46,49 @@ enum macro_keycodes {
 #define KC_LSAD  RGB_SAD
 #define KC_LVAI  RGB_VAI
 #define KC_LVAD  RGB_VAD
-#define KC_LSMOD RGB_SMOD
-#define KC_CTLTB CTL_T(KC_TAB)
+#define KC_LMOD  RGB_MOD
+#define KC_RMOD  RGB_RMOD
+#define KC_ALTTB ALT_T(KC_TAB)
 #define KC_ENTCTL CTL_T(KC_ENT)
+//#define KC_LOWER TD(LOWER_LGUI)
 #define KC_LOWER MO(_LOWER)
+#define KC_RALT_LGUI TD(RALT_LGUI)
+//#define KC_RAISE LT(_RAISE, KC_BSPC)
 #define KC_RAISE MO(_RAISE)
 #define KC_NAV MO(_NAV)
 #define KC_LOCK  RGUI(KC_L)
+#define KC_MGKSPC LT(_NAV3, KC_SPC)
+#define KC_FORWRD LCTL(KC_RIGHT)
+#define KC_BACKWRD LCTL(KC_LEFT)
+#define KC_YANK LCTL(KC_INS)
+#define KC_PASTE LSFT(KC_INS)
 
+enum td_keycodes {
+  RALT_LGUI = 0
+};
+
+typedef enum {
+  SINGLE_TAP,
+  SINGLE_HOLD
+} td_state_t;
+
+static td_state_t td_state;
+
+int curr_dance (qk_tap_dance_state_t *state);
+
+void raltlgui_finished(qk_tap_dance_state_t *state, void *user_data);
+void raltlgui_reset(qk_tap_dance_state_t *state, void *user_data);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
         ESC,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P,  BSPC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB,     A,     S,     D,     F,     G,                      H,     J,     K,     L,  SCLN,  QUOT,\
+      ALTTB,     A,     S,     D,     F,     G,                      H,     J,     K,     L,  SCLN,  QUOT,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      NAV,     Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,   DEL,\
+      NAV,       Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,   DEL,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, LSFT, ENTCTL,     RALT, SPC, RAISE \
+                                  LOWER, LSFT, ENTCTL,   RALT_LGUI, MGKSPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
@@ -79,7 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        XXXXX, XXXXX, XXXXX, XXXXX, LGUI, XXXXX,                  XXXXX, XXXXX, _____,  UNDS,  EQL, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, LSFT, ENTCTL,      RALT, SPC, RAISE \
+                                  LOWER, LSFT, ENTCTL,   RALT_LGUI,MGKSPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
@@ -91,44 +112,56 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       XXXXX, XXXXX,  MNXT,  VOLD,  VOLU,  MPLY,                  XXXXX, XXXXX, _____,  UNDS,   EQL, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, LSFT, ENTCTL,      RALT, SPC, RAISE \
+                                  LOWER, LSFT, ENTCTL,   RALT_LGUI,MGKSPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
 [_NAV] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        GRV,    F1,    F2,    F3,    F4,    F5,                     F6, XXXXX,    UP, XXXXX, XXXXX,XXXXX,\
+        GRV,    F1,    F2,    F3,    F4, XXXXX,                  XXXXX, XXXXX,    UP, XXXXX, XXXXX,XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      XXXXX,    F7,    F8,    F9,   F10,   F11,                    F12,  LEFT,  DOWN, RIGHT, XXXXX, XXXXX,\
+      ALTTB,    F5,    F6,    F7,    F9, XXXXX,                  XXXXX,  LEFT,  DOWN, RIGHT, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+      XXXXX,    F9,   F10,   F11,   F12, XXXXX,                  XXXXX,  MNXT,  VOLD,  VOLU,  MPLY, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, ENTCTL, LSFT,      RALT, SPC, RAISE \
+                                  LOWER, ENTCTL, LSFT,   RALT_LGUI,MGKSPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
   [_NAV2] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        GRV,    F1,    F2,    F3,    F4,    F5,                     F6, XXXXX,  PGUP, XXXXX, XXXXX, _____,\
+        GRV,    F1,    F2,    F3,    F4, XXXXX,                  XXXXX, XXXXX,  PGUP, XXXXX, XXXXX, _____,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      XXXXX,    F7,    F8,    F9,   F10,   F11,                    F12,  HOME,  PGDN, END, XXXXX, XXXXX,\
+      ALTTB,    F5,    F6,    F7,    F9, XXXXX,                  XXXXX,  HOME,  PGDN,   END, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,XXXXX,\
+      XXXXX,    F9,   F10,   F11,   F12, XXXXX,                  XXXXX,  MNXT,  VOLD,  VOLU,  MPLY,XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, ENTCTL, LSFT,      RALT, SPC, RAISE \
+                                  LOWER, ENTCTL, LSFT,   RALT_LGUI,MGKSPC, RAISE \
+                              //`--------------------'  `--------------------'
+  ),
+
+  [_NAV3] = LAYOUT_kc( \
+  //,-----------------------------------------.                ,-----------------------------------------.
+      _____, _____, _____,FORWRD, _____, _____,                   YANK, _____, _____, _____, PASTE, _____,\
+  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
+      _____,  HOME,  PGDN,  PGUP,   END, _____,                  LEFT,   DOWN,    UP, RIGHT, _____, _____,\
+  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
+      _____, _____,   DEL, _____, _____,BACKWRD,                 _____, _____, _____, _____, _____, _____,\
+  //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
+                                  LOWER, ENTCTL, LSFT,   RALT_LGUI,MGKSPC, RAISE \
                               //`--------------------'  `--------------------'
   ),
 
 
   [_ADJUST] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        RST,  LRST, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+       LTOG,  LRST, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LTOG,  LHUI,  LSAI,  LVAI, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX,  LOCK, XXXXX, XXXXX,\
+       LMOD,  LHUI,  LSAI,  LVAI, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX,  LOCK, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      LSMOD,  LHUD,  LSAD,  LVAD, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+       RMOD,  LHUD,  LSAD,  LVAD, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, ENTCTL, LSFT,      RALT, SPC, RAISE \
+                                  LOWER, ENTCTL, LSFT,   RALT_LGUI, SPC, RAISE \
                               //`--------------------'  `--------------------'
   )
 };
@@ -324,3 +357,63 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
+
+#ifdef RGB_MATRIX_ENABLE
+
+void suspend_power_down_keymap(void) {
+    rgb_matrix_set_suspend_state(true);
+}
+
+void suspend_wakeup_init_keymap(void) {
+    rgb_matrix_set_suspend_state(false);
+}
+#endif
+
+//tap dance for lower/lgui
+int curr_dance (qk_tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (state->interrupted || !state->pressed) { return SINGLE_TAP;}
+        else { return SINGLE_HOLD;}
+    }
+    return 2;
+}
+void raltlgui_finished(qk_tap_dance_state_t *state, void *user_data) {
+    td_state = curr_dance(state);
+    switch (td_state)
+    {
+    case SINGLE_TAP:
+        /* code */
+        register_code16(KC_LGUI);
+        break;
+
+    case SINGLE_HOLD:
+        /* code */
+        //layer_on(_LOWER);
+        register_code16(KC_RALT);
+
+    default:
+        break;
+    }
+}
+void raltlgui_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (td_state)
+    {
+    case SINGLE_TAP:
+        /* code */
+        unregister_code16(KC_LGUI);
+        break;
+
+    case SINGLE_HOLD:
+        /* code */
+        //layer_off(_LOWER);
+        unregister_code16(KC_RALT);
+        break;
+
+    default:
+        break;
+    }
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [RALT_LGUI] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, raltlgui_finished, raltlgui_reset)
+};
