@@ -26,13 +26,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 #define EE_HANDS
 
-#undef USE_I2C
+//#undef USE_I2C
 #define SSD1306OLED
 
 #define USE_SERIAL_PD2
 
-//#define TAPPING_FORCE_HOLD
-//#define TAPPING_TERM 100
 #ifdef RBGLIGHT_ENABLE
 #undef RGBLED_NUM
 #define RGBLIGHT_ANIMATIONS
@@ -67,8 +65,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #   define DISABLE_RGB_MATRIX_CYCLE_UP_DOWN
 // #   define DISABLE_RGB_MATRIX_CYCLE_OUT_IN
 // #   define DISABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL
-// #   define DISABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
-// #   define DISABLE_RGB_MATRIX_DUAL_BEACON
+#define DISABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
+#define DISABLE_RGB_MATRIX_DUAL_BEACON
 // #   define DISABLE_RGB_MATRIX_RAINBOW_BEACON
 // #   define DISABLE_RGB_MATRIX_RAINBOW_PINWHEELS
 // #   define DISABLE_RGB_MATRIX_RAINDROPS
@@ -94,3 +92,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define TAPPING_TERM 200
 #define IGNORE_MOD_TAP_INTERRUPT
+

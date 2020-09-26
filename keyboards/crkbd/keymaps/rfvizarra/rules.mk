@@ -1,3 +1,5 @@
+#This enables Link Time Optimization.This can save a good chunk of space(several KB for me), but the macro and function... functions cause it to error out.
+LTO_ENABLE = yes
 
 # Build Options
 #   change to "no" to disable the options, or define them in the Makefile in
@@ -22,5 +24,14 @@ RGB_MATRIX_ENABLE     = WS2812
 SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
 
 BOOTLOADER = qmk-dfu
-OLED_DRIVER_ENABLE = no
+OLED_DRIVER_ENABLE = yes
 
+# If you want to change the display of OLED, you need to change here
+SRC +=  ./lib/glcdfont.c \
+        ./lib/rgb_state_reader.c \
+        ./lib/layer_state_reader.c \
+        ./lib/logo_reader.c \
+        ./lib/keylogger.c \
+        # ./lib/mode_icon_reader.c \
+        # ./lib/host_led_state_reader.c \
+        # ./lib/timelogger.c \
