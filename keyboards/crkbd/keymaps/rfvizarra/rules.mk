@@ -23,7 +23,7 @@ RGB_MATRIX_ENABLE     = WS2812
 # Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE
 SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
 
-BOOTLOADER = qmk-dfu
+#BOOTLOADER = qmk-dfu
 OLED_DRIVER_ENABLE = yes
 
 # If you want to change the display of OLED, you need to change here

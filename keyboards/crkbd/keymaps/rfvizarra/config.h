@@ -22,14 +22,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Select hand configuration */
 
-// #define MASTER_LEFT
+#define MASTER_LEFT
 // #define MASTER_RIGHT
-#define EE_HANDS
+//#define EE_HANDS
 
-//#undef USE_I2C
 #define SSD1306OLED
 
 #define USE_SERIAL_PD2
+
+#define TAPPING_FORCE_HOLD
+#define TAPPING_TERM 200
+#define IGNORE_MOD_TAP_INTERRUPT
+#undef PERMISSIVE_HOLD
 
 #ifdef RBGLIGHT_ENABLE
 #undef RGBLED_NUM
@@ -90,6 +94,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #undef PRODUCT
 #define PRODUCT rfvizarra Hacked Corne Keyboard
 
-#define TAPPING_TERM 200
-#define IGNORE_MOD_TAP_INTERRUPT
+// #define TAPPING_TERM 200
+// #define IGNORE_MOD_TAP_INTERRUPT
 
