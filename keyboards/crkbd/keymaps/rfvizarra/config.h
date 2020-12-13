@@ -25,9 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MASTER_LEFT
 // #define MASTER_RIGHT
 //#define EE_HANDS
-#undef USE_I2C
-#undef USER_MATRIX_I2C
-#define SSD1306OLED
+// #undef USE_I2C
+// #undef USER_MATRIX_I2C
+// #define SSD1306OLED
 
 #define USE_SERIAL_PD2
 
@@ -98,3 +98,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define TAPPING_TERM 200
 // #define IGNORE_MOD_TAP_INTERRUPT
 
+#define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
